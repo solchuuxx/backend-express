@@ -12,6 +12,9 @@ class UserService {
         return await User.create(user);
     }
 
+    async delete(user) {
+        return await User.delete(user);
+    }
 }
 
 export default new UserService()

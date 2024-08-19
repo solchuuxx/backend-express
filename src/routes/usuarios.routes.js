@@ -1,6 +1,6 @@
 import express from 'express';
 import { check } from 'express-validator';
-import { createUser } from '../controllers/usuarios.controllers.js';
+import { createUser, getUsers, deleteUser } from '../controllers/usuarios.controllers.js'
 
 const router = express.Router();
 
@@ -11,7 +11,9 @@ router.post('/user',
         check('password', 'La contraseña debe tener al menos 6 carácteres.').isLength({ min: 6 }),
     ],
     createUser
-);
+)
+router.get('/users', getUsers)
+router.delete('/user', deleteUser)
 
 
 export default router;

@@ -19,10 +19,8 @@ export const getProducts = async (req, res) => {
             message: err.message,
             status: err.status
         })
-    }
+}}
 
-
-}
 export const createProduct = async (req, res) => {
 
     try {
@@ -38,16 +36,34 @@ export const createProduct = async (req, res) => {
             status: err.status
         })
     }
-
-
-    
-
 }
 
-export const updateProduct = (req, res) => {
+export const deleteProduct = async (req, res) => {
+    try {
+        await ProductService.delete(req.body);
+        return res.status(201).json({
+            message: 'Producto eliminado'
+        });
+    } catch (error) {
+        return res.status(error.statusCode || 500).json({
+            message: error.message,
+            status: error.status
+        });
+    }
+};
 
-    return res.json({
-        msg: 'All Products'
-    })
 
-}
+export const updateProduct = async (req, res) => {
+    const { id } = req.params;
+    const updateData = req.body;
+
+    try {
+        const updatedProduct = await Product.findByIdAndUpdate(id, updateData, { new: true });
+        if (!updatedProduct) {
+            return res.status(404).json({ msg: 'Producto no encontrado' });
+        }
+        return res.json(updatedProduct);
+    } catch (error) {
+        return res.status(500).json({ msg: 'Error actualizando producto', error: error.message });
+    }
+};

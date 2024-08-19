@@ -12,6 +12,9 @@ class ProductService {
         return await Product.create(product);
     }
 
+    async delete(product) {
+        return await Product.delete(product);
+    }
 }
 
 export default new ProductService()
