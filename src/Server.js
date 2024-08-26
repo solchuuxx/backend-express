@@ -6,6 +6,7 @@ import productRoutes from './routes/productos.routes.js';
 import userRoutes from './routes/usuarios.routes.js';
 import { dbConnection } from "./db/connection.js";
 
+
 class Server {
     constructor() {
         this.app = express();
