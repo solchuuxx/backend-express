@@ -1,13 +1,15 @@
-import express from "express";
+import express, { Application } from "express";
 import cors from 'cors';
 import morgan from "morgan";
 import { PORT } from './config/conf.js';
 import productRoutes from './routes/productos.routes.js';
 import userRoutes from './routes/usuarios.routes.js';
-import { dbConnection } from "./db/connection.js";
+import { dbConnection } from "./db/connection";
 
 
 class Server {
+    private app: Application;
+    public port: string | undefined;
     constructor() {
         this.app = express();
         this.port = PORT;
@@ -17,14 +19,14 @@ class Server {
         this.routes();
     }
 
-    async dbConnect() {
-        await dbConnection();
-    }
-
-    middlewares() {
+    middlewares(): void {
         this.app.use(cors());
         this.app.use(morgan('dev'));
         this.app.use(express.json());
+    }
+
+    async dbConnect() {
+        await dbConnection();
     }
 
     routes() {

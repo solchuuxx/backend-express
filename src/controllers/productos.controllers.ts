@@ -1,7 +1,9 @@
-import ProductService from "../services/ProductService.js"
+import { Request, Response } from "express";
+import ProductService from "../services/ProductService"
+import Product from "../models/Product"
 
 
-export const getProducts = async (req, res) => {
+export const getProducts = async (req: Request, res: Response) => {
 
     try {
         const products = await ProductService.findAll();
@@ -14,14 +16,14 @@ export const getProducts = async (req, res) => {
         }
         return res.json(products)
 
-    } catch (err) {
+    } catch (err: any) {
         return res.status(err.statusCode || 500).json({
             message: err.message,
             status: err.status
         })
 }}
 
-export const createProduct = async (req, res) => {
+export const createProduct = async (req: Request, res: Response) => {
 
     try {
 
@@ -30,7 +32,7 @@ export const createProduct = async (req, res) => {
             message: 'Producto creado'
         })
         
-    } catch (error) {
+    } catch (err: any) {
         return res.status(err.statusCode || 500).json({
             message: err.message,
             status: err.status
@@ -38,13 +40,13 @@ export const createProduct = async (req, res) => {
     }
 }
 
-export const deleteProduct = async (req, res) => {
+export const deleteProduct = async (req: Request, res: Response) => {
     try {
         await ProductService.delete(req.body);
         return res.status(201).json({
             message: 'Producto eliminado'
         });
-    } catch (error) {
+    } catch (error: any) {
         return res.status(error.statusCode || 500).json({
             message: error.message,
             status: error.status
@@ -53,7 +55,7 @@ export const deleteProduct = async (req, res) => {
 };
 
 
-export const updateProduct = async (req, res) => {
+export const updateProduct = async (req: Request, res: Response) => {
     const { id } = req.params;
     const updateData = req.body;
 
@@ -63,7 +65,7 @@ export const updateProduct = async (req, res) => {
             return res.status(404).json({ msg: 'Producto no encontrado' });
         }
         return res.json(updatedProduct);
-    } catch (error) {
+    } catch (error: any) {
         return res.status(500).json({ msg: 'Error actualizando producto', error: error.message });
     }
 };
